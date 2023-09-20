@@ -7,4 +7,4 @@ fs.writeFile(process.argv[2], content, err => {
   if (err) {
     console.error(err);
   }
-})
+});
