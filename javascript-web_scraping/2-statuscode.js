@@ -1,11 +1,11 @@
 #!/usr/bin/node
+const request = require('request');
+const process = require('process');
 
-const axios = require('axios');
+const link = process.argv[2];
 
-axios.get(process.argv[2])
-  .then(function (response) {
-    console.log('code: %s', response.status);
-  })
-  .catch(function (error) {
-    console.log('code: %s', error.response.status);
+request
+  .get(link)
+  .on('response', function (response) {
+    console.log('code: ' + response.statusCode);
   });
