@@ -1,18 +1,19 @@
 #!/usr/bin/node
-const axios = require('axios');
 
+const axios = require('axios');
 let count = 0;
 
-axios.get(proces(argv[2]))
-.then((response)=>{
+axios.get(process.argv[2])
+  .then(function (response) {
     response.data.results.forEach(element => {
-        element.characters.forEach(movie => {
-            if (movie.includes('18'))
-                count++;
-        })
-    })
+      element.characters.forEach(movies => {
+        if (movies.includes('18')) {
+          count++;
+        }
+      });
+    });
     console.log(count);
-})
-.catch((err)=>{
-    console.log("err---",err)
-})
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
