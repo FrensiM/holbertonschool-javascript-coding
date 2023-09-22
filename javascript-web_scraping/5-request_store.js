@@ -1,18 +1,17 @@
 #!/usr/bin/node
-const axios = require('axios');
+const process = require('process');
+const request = require('request');
+const fs = require('fs');
+const api = process.argv[2];
+const filename = process.argv[3];
 
-const apiUrl = 'https://swapi.dev/api/films/';
-
-axios.get(apiUrl)
-  .then(response => {
-
-    const filmTitles = response.data.results.map(film => film.title);
-
-    console.log('Film Titles:');
-    filmTitles.forEach(title => {
-      console.log(title);
-    });
-  })
-  .catch(error => {
-    console.error('Error fetching data from Star Wars films API:', error);
+request(api, function (error, response, body) {
+  if (error) {
+    console.error('error:', error); // Print the error if one occurred
+  }
+  fs.writeFile(filename, body, 'utf-8', (error) => {
+    if (error) {
+      console.log(error);
+    }
   });
+});
