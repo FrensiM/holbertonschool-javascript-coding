@@ -1,30 +1,23 @@
 #!/usr/bin/node
-const axios = require('axios');
-
-const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
-
-axios.get(apiUrl)
-  .then(response => {
-
-    const todos = response.data;
-
-    const completedTasksByUser = {};
-
-    todos.forEach(todo => {
-      if (todo.completed) {
-        if (!completedTasksByUser[todo.userId]) {
-          completedTasksByUser[todo.userId] = 1;
-        } else {
-          completedTasksByUser[todo.userId]++;
-        }
-      }
-    });
-
-    console.log('Users with completed tasks:');
-    for (const userId in completedTasksByUser) {
-      console.log(`User ID: ${userId}, Completed Tasks: ${completedTasksByUser[userId]}`);
+const request = require('request');
+const apiCall = process.argv[2];
+request.get(apiCall, function (error, response, body) {
+  if (error) {
+    console.log(error);
+  }
+  const obj = {};
+  let isComplete = 0;
+  const data = JSON.parse(body);
+  for (const elem of data) {
+    isComplete = data.filter(
+      (todo) => todo.userId === elem.userId && todo.completed
+    ).length;
+    if (isComplete === 0) {
+      console.log(obj);
+      return;
+    } else {
+      obj[elem.userId] = isComplete;
     }
-  })
-  .catch(error => {
-    console.error('Error fetching data from JSONPlaceholder API:', error);
-  });
+  }
+  console.log(obj);
+});
