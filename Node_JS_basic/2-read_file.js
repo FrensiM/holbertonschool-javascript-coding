@@ -10,25 +10,25 @@ function countStudents(path) {
 
     const fieldObj = {};
     for (const line of lines) {
-    const fields = line.split(',');
-    const field = fields[fields.length - 1];
+      const fields = line.split(',');
+      const field = fields[fields.length - 1];
 
-        if (fieldObj[field]) {
-            fieldObj[field] += 1;
-        } else {
-            fieldObj[field] = 1;
-        }
-        }
+      if (fieldObj[field]) {
+        fieldObj[field] += 1;
+      } else {
+        fieldObj[field] = 1;
+      }
+    }
 
     for (const [field, count] of Object.entries(fieldObj)) {
-        const st = lines.filter((line) => line.endsWith(field))
-            .map((line) => line.split(',')[0])
-            .join(', ');
-        console.log(`Number of students in ${field}: ${count}. List: ${st}`);
+      const st = lines.filter((line) => line.endsWith(field))
+        .map((line) => line.split(',')[0])
+        .join(', ');
+      console.log(`Number of students in ${field}: ${count}. List: ${st}`);
     }
-    } catch (error) {
-        throw new Error('Cannot load the database');
-    }
+  } catch (error) {
+    throw new Error('Cannot load the database');
+  }
 }
 
 module.exports = countStudents;
